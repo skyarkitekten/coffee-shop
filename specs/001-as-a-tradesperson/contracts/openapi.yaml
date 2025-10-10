@@ -1,0 +1,1003 @@
+openapi: 3.0.3
+info:
+  title: Tradesperson Profile Management API
+  description: API for managing tradesperson profiles, search, and job applications
+  version: 1.0.0
+  contact:
+    name: Coffee Shop Development Team
+  license:
+    name: MIT
+
+servers:
+  - url: https://api.coffee-shop.com/v1
+    description: Production server
+  - url: https://staging-api.coffee-shop.com/v1
+    description: Staging server
+
+security:
+  - BearerAuth: []
+
+paths:
+  /profiles:
+    get:
+      summary: Get current user's profile
+      tags: [Profiles]
+      responses:
+        "200":
+          description: Profile retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TradesperonProfile"
+        "404":
+          description: Profile not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+    post:
+      summary: Create a new tradesperson profile
+      tags: [Profiles]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProfileRequest"
+      responses:
+        "201":
+          description: Profile created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TradesperonProfile"
+        "400":
+          description: Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+
+    put:
+      summary: Update tradesperson profile
+      tags: [Profiles]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateProfileRequest"
+      responses:
+        "200":
+          description: Profile updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TradesperonProfile"
+        "400":
+          description: Invalid request data
+        "404":
+          description: Profile not found
+
+  /profiles/{profileId}:
+    get:
+      summary: Get profile by ID (public view)
+      tags: [Profiles]
+      parameters:
+        - name: profileId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Profile retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublicTradesperonProfile"
+        "404":
+          description: Profile not found
+
+  /profiles/trade-specialties:
+    post:
+      summary: Add trade specialty to profile
+      tags: [Profiles]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTradeSpecialtyRequest"
+      responses:
+        "201":
+          description: Trade specialty added successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TradeSpecialty"
+
+  /profiles/trade-specialties/{specialtyId}:
+    put:
+      summary: Update trade specialty
+      tags: [Profiles]
+      parameters:
+        - name: specialtyId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateTradeSpecialtyRequest"
+      responses:
+        "200":
+          description: Trade specialty updated successfully
+
+    delete:
+      summary: Remove trade specialty
+      tags: [Profiles]
+      parameters:
+        - name: specialtyId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: Trade specialty removed successfully
+
+  /profiles/licenses:
+    post:
+      summary: Upload license document
+      tags: [Licenses]
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: License document (PDF, JPG, PNG)
+                licenseType:
+                  type: string
+                licenseNumber:
+                  type: string
+                issuingAuthority:
+                  type: string
+                issueDate:
+                  type: string
+                  format: date
+                expirationDate:
+                  type: string
+                  format: date
+              required:
+                - file
+                - licenseType
+                - licenseNumber
+                - issuingAuthority
+                - issueDate
+                - expirationDate
+      responses:
+        "201":
+          description: License uploaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/License"
+
+  /profiles/licenses/{licenseId}:
+    put:
+      summary: Update license information
+      tags: [Licenses]
+      parameters:
+        - name: licenseId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateLicenseRequest"
+      responses:
+        "200":
+          description: License updated successfully
+
+    delete:
+      summary: Delete license
+      tags: [Licenses]
+      parameters:
+        - name: licenseId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: License deleted successfully
+
+  /profiles/service-areas:
+    post:
+      summary: Add service area to profile
+      tags: [Service Areas]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateServiceAreaRequest"
+      responses:
+        "201":
+          description: Service area added successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServiceArea"
+
+  /profiles/service-areas/{areaId}:
+    put:
+      summary: Update service area
+      tags: [Service Areas]
+      parameters:
+        - name: areaId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateServiceAreaRequest"
+      responses:
+        "200":
+          description: Service area updated successfully
+
+    delete:
+      summary: Remove service area
+      tags: [Service Areas]
+      parameters:
+        - name: areaId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: Service area removed successfully
+
+  /search/profiles:
+    get:
+      summary: Search for tradesperson profiles
+      tags: [Search]
+      parameters:
+        - name: tradeType
+          in: query
+          schema:
+            $ref: "#/components/schemas/TradeType"
+          description: Filter by trade type
+        - name: skillLevel
+          in: query
+          schema:
+            $ref: "#/components/schemas/SkillLevel"
+          description: Minimum skill level
+        - name: latitude
+          in: query
+          schema:
+            type: number
+            format: double
+          description: Search center latitude
+        - name: longitude
+          in: query
+          schema:
+            type: number
+            format: double
+          description: Search center longitude
+        - name: radiusMiles
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+          description: Search radius in miles
+        - name: city
+          in: query
+          schema:
+            type: string
+          description: Filter by city
+        - name: state
+          in: query
+          schema:
+            type: string
+          description: Filter by state
+        - name: isVerified
+          in: query
+          schema:
+            type: boolean
+          description: Only show verified profiles
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+      responses:
+        "200":
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SearchResults"
+
+  /jobs:
+    get:
+      summary: Get jobs matching tradesperson profile
+      tags: [Jobs]
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            default: 20
+      responses:
+        "200":
+          description: Matching jobs
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobSearchResults"
+
+  /jobs/{jobId}/apply:
+    post:
+      summary: Apply to a job posting
+      tags: [Jobs]
+      parameters:
+        - name: jobId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/JobApplicationRequest"
+      responses:
+        "201":
+          description: Application submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobApplication"
+        "409":
+          description: Already applied to this job
+
+  /admin/licenses:
+    get:
+      summary: Get licenses pending verification
+      tags: [Admin]
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: status
+          in: query
+          schema:
+            $ref: "#/components/schemas/VerificationStatus"
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+      responses:
+        "200":
+          description: Licenses for review
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminLicenseResults"
+
+  /admin/licenses/{licenseId}/verify:
+    post:
+      summary: Verify or reject a license
+      tags: [Admin]
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: licenseId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LicenseVerificationRequest"
+      responses:
+        "200":
+          description: License verification updated
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    TradesperonProfile:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        userId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        firstName:
+          type: string
+          minLength: 2
+          maxLength: 50
+        lastName:
+          type: string
+          minLength: 2
+          maxLength: 50
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+          pattern: '^\+\d{10,15}$'
+        experienceYears:
+          type: integer
+          minimum: 0
+          maximum: 50
+        bio:
+          type: string
+          maxLength: 1000
+        profileStatus:
+          $ref: "#/components/schemas/ProfileStatus"
+        licenseVerificationStatus:
+          $ref: "#/components/schemas/VerificationStatus"
+        isAvailable:
+          type: boolean
+        tradeSpecialties:
+          type: array
+          items:
+            $ref: "#/components/schemas/TradeSpecialty"
+        licenses:
+          type: array
+          items:
+            $ref: "#/components/schemas/License"
+        serviceAreas:
+          type: array
+          items:
+            $ref: "#/components/schemas/ServiceArea"
+
+    PublicTradesperonProfile:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        firstName:
+          type: string
+        lastName:
+          type: string
+        experienceYears:
+          type: integer
+        bio:
+          type: string
+        licenseVerificationStatus:
+          $ref: "#/components/schemas/VerificationStatus"
+        isAvailable:
+          type: boolean
+        tradeSpecialties:
+          type: array
+          items:
+            $ref: "#/components/schemas/TradeSpecialty"
+        serviceAreas:
+          type: array
+          items:
+            $ref: "#/components/schemas/ServiceArea"
+
+    TradeSpecialty:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        tradesperonId:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        tradeType:
+          $ref: "#/components/schemas/TradeType"
+        skillLevel:
+          $ref: "#/components/schemas/SkillLevel"
+        yearsOfExperience:
+          type: integer
+          minimum: 0
+        specializations:
+          type: array
+          items:
+            type: string
+        isCertified:
+          type: boolean
+        certificationBody:
+          type: string
+
+    License:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        tradesperonId:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        licenseType:
+          type: string
+        licenseNumber:
+          type: string
+        issuingAuthority:
+          type: string
+        issueDate:
+          type: string
+          format: date
+        expirationDate:
+          type: string
+          format: date
+        documentUrl:
+          type: string
+          format: uri
+        fileName:
+          type: string
+        fileSize:
+          type: integer
+        mimeType:
+          type: string
+        verificationStatus:
+          $ref: "#/components/schemas/VerificationStatus"
+        verificationNotes:
+          type: string
+        verifiedAt:
+          type: string
+          format: date-time
+        verifiedBy:
+          type: string
+
+    ServiceArea:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        tradesperonId:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        areaType:
+          $ref: "#/components/schemas/ServiceAreaType"
+        centerLatitude:
+          type: number
+          format: double
+        centerLongitude:
+          type: number
+          format: double
+        radiusMiles:
+          type: integer
+          minimum: 1
+          maximum: 100
+        city:
+          type: string
+        state:
+          type: string
+        zipCode:
+          type: string
+        displayName:
+          type: string
+        isActive:
+          type: boolean
+
+    JobApplication:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        tradesperonId:
+          type: string
+          format: uuid
+        jobId:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        status:
+          $ref: "#/components/schemas/ApplicationStatus"
+        appliedAt:
+          type: string
+          format: date-time
+        coverMessage:
+          type: string
+          maxLength: 500
+        viewedByEmployer:
+          type: boolean
+        viewedAt:
+          type: string
+          format: date-time
+
+    # Request/Response Schemas
+    CreateProfileRequest:
+      type: object
+      required:
+        - firstName
+        - lastName
+        - email
+        - phone
+        - experienceYears
+      properties:
+        firstName:
+          type: string
+          minLength: 2
+          maxLength: 50
+        lastName:
+          type: string
+          minLength: 2
+          maxLength: 50
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+          pattern: '^\+\d{10,15}$'
+        experienceYears:
+          type: integer
+          minimum: 0
+          maximum: 50
+        bio:
+          type: string
+          maxLength: 1000
+
+    UpdateProfileRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+          minLength: 2
+          maxLength: 50
+        lastName:
+          type: string
+          minLength: 2
+          maxLength: 50
+        phone:
+          type: string
+          pattern: '^\+\d{10,15}$'
+        experienceYears:
+          type: integer
+          minimum: 0
+          maximum: 50
+        bio:
+          type: string
+          maxLength: 1000
+        isAvailable:
+          type: boolean
+
+    CreateTradeSpecialtyRequest:
+      type: object
+      required:
+        - tradeType
+        - skillLevel
+        - yearsOfExperience
+      properties:
+        tradeType:
+          $ref: "#/components/schemas/TradeType"
+        skillLevel:
+          $ref: "#/components/schemas/SkillLevel"
+        yearsOfExperience:
+          type: integer
+          minimum: 0
+        specializations:
+          type: array
+          items:
+            type: string
+        isCertified:
+          type: boolean
+        certificationBody:
+          type: string
+
+    UpdateTradeSpecialtyRequest:
+      type: object
+      properties:
+        skillLevel:
+          $ref: "#/components/schemas/SkillLevel"
+        yearsOfExperience:
+          type: integer
+          minimum: 0
+        specializations:
+          type: array
+          items:
+            type: string
+        isCertified:
+          type: boolean
+        certificationBody:
+          type: string
+
+    UpdateLicenseRequest:
+      type: object
+      properties:
+        licenseType:
+          type: string
+        licenseNumber:
+          type: string
+        issuingAuthority:
+          type: string
+        issueDate:
+          type: string
+          format: date
+        expirationDate:
+          type: string
+          format: date
+
+    CreateServiceAreaRequest:
+      type: object
+      required:
+        - areaType
+        - displayName
+      properties:
+        areaType:
+          $ref: "#/components/schemas/ServiceAreaType"
+        centerLatitude:
+          type: number
+          format: double
+        centerLongitude:
+          type: number
+          format: double
+        radiusMiles:
+          type: integer
+          minimum: 1
+          maximum: 100
+        city:
+          type: string
+        state:
+          type: string
+        zipCode:
+          type: string
+        displayName:
+          type: string
+
+    UpdateServiceAreaRequest:
+      type: object
+      properties:
+        centerLatitude:
+          type: number
+          format: double
+        centerLongitude:
+          type: number
+          format: double
+        radiusMiles:
+          type: integer
+          minimum: 1
+          maximum: 100
+        city:
+          type: string
+        state:
+          type: string
+        zipCode:
+          type: string
+        displayName:
+          type: string
+        isActive:
+          type: boolean
+
+    JobApplicationRequest:
+      type: object
+      properties:
+        coverMessage:
+          type: string
+          maxLength: 500
+
+    LicenseVerificationRequest:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          enum: [verified, rejected]
+        notes:
+          type: string
+          maxLength: 500
+
+    SearchResults:
+      type: object
+      properties:
+        profiles:
+          type: array
+          items:
+            $ref: "#/components/schemas/PublicTradesperonProfile"
+        pagination:
+          $ref: "#/components/schemas/PaginationInfo"
+        totalCount:
+          type: integer
+
+    JobSearchResults:
+      type: object
+      properties:
+        jobs:
+          type: array
+          items:
+            type: object
+            # Job schema will be defined when job management is implemented
+        pagination:
+          $ref: "#/components/schemas/PaginationInfo"
+
+    AdminLicenseResults:
+      type: object
+      properties:
+        licenses:
+          type: array
+          items:
+            $ref: "#/components/schemas/License"
+        pagination:
+          $ref: "#/components/schemas/PaginationInfo"
+
+    PaginationInfo:
+      type: object
+      properties:
+        page:
+          type: integer
+        limit:
+          type: integer
+        totalPages:
+          type: integer
+        hasNext:
+          type: boolean
+        hasPrevious:
+          type: boolean
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+
+    ValidationErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        validation:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              message:
+                type: string
+        timestamp:
+          type: string
+          format: date-time
+
+    # Enums
+    ProfileStatus:
+      type: string
+      enum:
+        - draft
+        - complete
+        - suspended
+
+    VerificationStatus:
+      type: string
+      enum:
+        - pending
+        - verified
+        - rejected
+        - not_submitted
+
+    TradeType:
+      type: string
+      enum:
+        - electrician
+        - plumber
+        - carpenter
+        - welder
+        - hvac_technician
+        - mason
+        - roofer
+        - painter
+        - flooring_installer
+        - general_contractor
+
+    SkillLevel:
+      type: string
+      enum:
+        - apprentice
+        - journeyman
+        - specialist
+        - master
+
+    ServiceAreaType:
+      type: string
+      enum:
+        - radius
+        - city
+        - zip
+
+    ApplicationStatus:
+      type: string
+      enum:
+        - applied
+        - viewed
+        - shortlisted
+        - rejected
+        - withdrawn
