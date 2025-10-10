@@ -1,50 +1,59 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report:
+- Version change: (new) → 1.0.0
+- Added sections: Full constitution implementation
+- Modified principles: All principles defined from template
+- Templates requiring updates: ✅ constitution.md updated
+- Follow-up TODOs: None
+-->
+
+# Coffee Shop Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. API-First Development
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+Every feature MUST start with API contract definition. Backend services expose well-defined REST APIs before frontend implementation begins. API schemas MUST be documented using OpenAPI/Swagger specifications. Breaking changes require versioning strategy and migration plan.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### II. Component-Driven UI
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+Frontend features MUST be built as reusable Vue.js components. Components MUST be self-contained with clear props interfaces and documented usage patterns. Shared components require design system approval and comprehensive testing.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### III. Cloud-Native Architecture (NON-NEGOTIABLE)
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+Applications MUST be designed for Azure cloud deployment from day one. Infrastructure as Code using Azure Resource Manager templates or Bicep. Services MUST support horizontal scaling, health checks, and graceful shutdown. No hard dependencies on local file systems or in-memory state.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### IV. Type Safety
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+TypeScript MUST be used for all JavaScript code in both frontend and backend. Strict type checking enabled with no 'any' types in production code. API contracts MUST generate TypeScript interfaces for frontend consumption. Runtime type validation required at service boundaries.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### V. Security by Design
+
+Security considerations MUST be addressed in every feature design. Authentication and authorization implemented at API gateway level. Sensitive data encrypted at rest and in transit. Regular security reviews and automated vulnerability scanning required. HTTPS enforced for all communications.
+
+## Technology Standards
+
+All projects MUST adhere to the specified technology stack:
+
+- Frontend: Vue.js 3+ with TypeScript and Composition API
+- Backend: Node.js with Fastify framework and TypeScript
+- Database: Azure SQL Database or Azure Cosmos DB
+- Cloud: Microsoft Azure with resource templates
+- CI/CD: Azure DevOps pipelines
+- Monitoring: Azure Application Insights and Log Analytics
+
+## Development Workflow
+
+Code quality gates MUST be enforced at every stage:
+
+- All features require specification and implementation plan before coding
+- Code reviews mandatory for all changes with focus on constitution compliance
+- Automated testing at unit, integration, and end-to-end levels
+- Performance and security testing in staging environment
+- Blue-green deployment strategy for production releases
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution supersedes all other development practices and coding standards. Amendments require technical lead approval and full team notification. All pull requests MUST verify compliance with core principles. Architecture decisions conflicting with principles require explicit justification and alternative approval process.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2025-10-10 | **Last Amended**: 2025-10-10

@@ -29,9 +29,17 @@
 
 ## Constitution Check
 
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+_GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
 
-[Gates determined based on constitution file]
+**Required compliance checks based on Coffee Shop Constitution:**
+
+- [ ] **API-First Development**: Does the feature start with API contract definition? Are OpenAPI specs planned?
+- [ ] **Component-Driven UI**: Are Vue.js components identified with clear interfaces? Is design system alignment planned?
+- [ ] **Cloud-Native Architecture**: Is Azure deployment considered from design phase? Are scaling and health checks planned?
+- [ ] **Type Safety**: Is TypeScript usage planned for all code? Are type definitions and interfaces specified?
+- [ ] **Security by Design**: Are authentication, authorization, and data protection addressed in the design?
+
+All items must be checked ✓ before proceeding to implementation.
 
 ## Project Structure
 
@@ -48,6 +56,7 @@ specs/[###-feature]/
 ```
 
 ### Source Code (repository root)
+
 <!--
   ACTION REQUIRED: Replace the placeholder tree below with the concrete layout
   for this feature. Delete unused options and expand the chosen structure with
@@ -96,9 +105,9 @@ directories captured above]
 
 ## Complexity Tracking
 
-*Fill ONLY if Constitution Check has violations that must be justified*
+_Fill ONLY if Constitution Check has violations that must be justified_
 
-| Violation | Why Needed | Simpler Alternative Rejected Because |
-|-----------|------------|-------------------------------------|
-| [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
-| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
+| Violation                  | Why Needed         | Simpler Alternative Rejected Because |
+| -------------------------- | ------------------ | ------------------------------------ |
+| [e.g., 4th project]        | [current need]     | [why 3 projects insufficient]        |
+| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient]  |
