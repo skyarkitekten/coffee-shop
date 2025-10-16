@@ -1,0 +1,23 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "@vue/eslint-config-typescript",
+    "@vue/eslint-config-prettier/skip-formatting"
+  ],
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  },
+  "env": {
+    "browser": true,
+    "es2022": true,
+    "node": true
+  },
+  "rules": {
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "vue/multi-word-component-names": "off",
+    "vue/no-reserved-component-names": "off",
+    "prefer-const": "error",
+    "no-var": "error"
+  }
+}

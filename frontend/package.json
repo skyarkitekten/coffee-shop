@@ -1,0 +1,58 @@
+{
+  "name": "coffee-shop-frontend",
+  "version": "1.0.0",
+  "description": "Frontend web application for Coffee Shop tradesperson profile management",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "format": "prettier --write src/**/*.{vue,ts,js,json,css,scss}",
+    "type-check": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "vue": "^3.3.8",
+    "vue-router": "^4.2.5",
+    "pinia": "^2.1.7",
+    "@vueuse/core": "^10.5.0",
+    "axios": "^1.6.0",
+    "zod": "^3.22.4",
+    "@azure/msal-browser": "^3.4.0",
+    "vue-toastification": "^2.0.0-rc.5",
+    "vee-validate": "^4.11.8",
+    "@vee-validate/zod": "^4.11.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.7",
+    "@vitejs/plugin-vue": "^4.4.1",
+    "@vue/eslint-config-prettier": "^8.0.0",
+    "@vue/eslint-config-typescript": "^12.0.0",
+    "@vue/test-utils": "^2.4.2",
+    "@vue/tsconfig": "^0.4.0",
+    "eslint": "^8.52.0",
+    "eslint-plugin-vue": "^9.17.0",
+    "jsdom": "^22.1.0",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2",
+    "vite": "^4.5.0",
+    "vitest": "^0.34.6",
+    "@vitest/coverage-v8": "^0.34.6",
+    "@vitest/ui": "^0.34.6",
+    "vue-tsc": "^1.8.22",
+    "sass": "^1.69.5"
+  },
+  "keywords": [
+    "vue",
+    "typescript",
+    "vite",
+    "tradesperson",
+    "profile",
+    "management"
+  ],
+  "author": "Coffee Shop Development Team",
+  "license": "MIT"
+}
