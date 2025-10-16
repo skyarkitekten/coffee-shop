@@ -1,3 +1,4 @@
+// License service provides CRUD operations and verification utilities for tradesperson licenses
 import { LicenseModel } from '../models/license.js';
 import { TradesperonProfileModel } from '../models/tradesperson.js';
 import { uploadFile, deleteFile } from '../lib/storage.js';
