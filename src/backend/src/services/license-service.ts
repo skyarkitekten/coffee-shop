@@ -2,11 +2,10 @@
 import { LicenseModel } from '../models/license.js';
 import { TradesperonProfileModel } from '../models/tradesperson.js';
 import { uploadFile, deleteFile } from '../lib/storage.js';
+import { validateChronology, validateFileMeta } from '../lib/validation.js';
+import { warn } from '../lib/logger.js';
 import { VerificationStatus } from '../types/index.js';
-import type {
-    License,
-    CreateLicenseRequest
-} from '../types/index.js';
+import type { License } from '../types/index.js';
 import { NotFoundError, ValidationError, ConflictError } from '../lib/errors.js';
 
 export class LicenseService {
@@ -102,7 +101,7 @@ export class LicenseService {
             const fileName = license.documentUrl.split('/').pop() || '';
             await deleteFile(fileName);
         } catch (error) {
-            console.warn('Failed to delete license file from storage:', error);
+            warn('Failed to delete license file from storage', { error: (error as Error).message });
             // Continue with database deletion even if file deletion fails
         }
 
@@ -158,17 +157,7 @@ export class LicenseService {
         expirationDate: Date;
     }): void {
         // Validate dates
-        if (data.expirationDate <= data.issueDate) {
-            throw new ValidationError('expirationDate', data.expirationDate, 'Expiration date must be after issue date');
-        }
-
-        if (data.expirationDate <= new Date()) {
-            throw new ValidationError('expirationDate', data.expirationDate, 'License has already expired');
-        }
-
-        if (data.issueDate > new Date()) {
-            throw new ValidationError('issueDate', data.issueDate, 'Issue date cannot be in the future');
-        }
+        validateChronology(data.issueDate, data.expirationDate);
 
         // Validate license type
         if (data.licenseType.length < 2 || data.licenseType.length > 100) {
@@ -192,23 +181,6 @@ export class LicenseService {
         size: number;
         originalName: string;
     }): void {
-        // Check file size (max 10MB)
-        const maxSize = 10 * 1024 * 1024;
-        if (file.size > maxSize) {
-            throw new ValidationError('file', file.size, 'File size must be less than 10MB');
-        }
-
-        // Check file type
-        const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/jpg'];
-        if (!allowedTypes.includes(file.mimeType)) {
-            throw new ValidationError('file', file.mimeType, 'File must be PDF, JPG, or PNG');
-        }
-
-        // Check file extension
-        const allowedExtensions = ['.pdf', '.jpg', '.jpeg', '.png'];
-        const extension = file.originalName.toLowerCase().substring(file.originalName.lastIndexOf('.'));
-        if (!allowedExtensions.includes(extension)) {
-            throw new ValidationError('file', extension, 'File extension must be .pdf, .jpg, .jpeg, or .png');
-        }
+        validateFileMeta(file);
     }
 }

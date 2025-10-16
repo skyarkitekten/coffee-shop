@@ -76,6 +76,12 @@ export interface TradesperonProfile {
     jobApplications?: JobApplication[];
 }
 
+// Backward-compatible aliases (preferred future naming convention uses 'Tradesperson')
+export type TradespersonProfile = TradesperonProfile;
+export type PublicTradespersonProfile = PublicTradesperonProfile;
+// Alias field name types for clarity in future refactor
+export type TradespersonProfileRow = TradesperonProfileRow;
+
 export interface TradeSpecialty {
     id: string;
     tradesperonId: string;
