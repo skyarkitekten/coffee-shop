@@ -1,0 +1,2 @@
+import{_ as s}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c as a,a as o,o as t}from"./index-D03JAoCQ.js";const r={},c={class:"page jobs-page"};function n(l,e){return t(),a("section",c,[...e[0]||(e[0]=[o("h1",null,"Jobs",-1),o("p",null,"Job listings will appear here.",-1)])])}const i=s(r,[["render",n],["__scopeId","data-v-fec41a16"]]);export{i as default};
+//# sourceMappingURL=JobsPage-BmBBc0qE.js.map

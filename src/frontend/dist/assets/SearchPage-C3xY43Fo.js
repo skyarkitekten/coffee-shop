@@ -1,0 +1,2 @@
+import{_ as o}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c as s,a,o as r}from"./index-D03JAoCQ.js";const t={},c={class:"page search-page"};function n(p,e){return r(),s("section",c,[...e[0]||(e[0]=[a("h1",null,"Search",-1),a("p",null,"Find tradespeople.",-1)])])}const d=o(t,[["render",n],["__scopeId","data-v-3ff17b63"]]);export{d as default};
+//# sourceMappingURL=SearchPage-C3xY43Fo.js.map

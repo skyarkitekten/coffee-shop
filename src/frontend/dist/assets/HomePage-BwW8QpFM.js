@@ -1,0 +1,2 @@
+import{_ as t}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c as a,a as o,o as s}from"./index-D03JAoCQ.js";const c={},n={class:"page home-page"};function r(_,e){return s(),a("section",n,[...e[0]||(e[0]=[o("h1",null,"Home",-1),o("p",null,"Welcome to Coffee Shop.",-1)])])}const p=t(c,[["render",r],["__scopeId","data-v-12c2a482"]]);export{p as default};
+//# sourceMappingURL=HomePage-BwW8QpFM.js.map

@@ -1,0 +1,2 @@
+import{_ as t}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c as n,a as e,o as s}from"./index-D03JAoCQ.js";const a={},c={class:"page not-found-page"};function r(d,o){return s(),n("section",c,[...o[0]||(o[0]=[e("h1",null,"404 - Not Found",-1),e("p",null,"The page you're looking for doesn't exist.",-1)])])}const p=t(a,[["render",r],["__scopeId","data-v-916c3b8c"]]);export{p as default};
+//# sourceMappingURL=NotFoundPage-NzLF79EX.js.map

@@ -1,0 +1,2 @@
+import{_ as n}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c as t,a as o,o as s}from"./index-D03JAoCQ.js";const a={},r={class:"page login-page"};function c(l,e){return s(),t("section",r,[...e[0]||(e[0]=[o("h1",null,"Login",-1),o("p",null,"Implement login form here.",-1)])])}const p=n(a,[["render",c],["__scopeId","data-v-17b27d96"]]);export{p as default};
+//# sourceMappingURL=LoginPage-Cku6MjLt.js.map

@@ -157,7 +157,7 @@ export const navigateToProfile = (): void => {
 };
 
 export const navigateToSearch = (query?: Record<string, string>): void => {
-    router.push({ name: 'search', query });
+    router.push({ name: 'search', query: query ?? {} });
 };
 
 export const navigateToPublicProfile = (profileId: string): void => {
@@ -165,7 +165,7 @@ export const navigateToPublicProfile = (profileId: string): void => {
 };
 
 export const navigateToLogin = (redirectUrl?: string): void => {
-    const query = redirectUrl ? { redirect: redirectUrl } : {};
+    const query: Record<string, string> = redirectUrl ? { redirect: redirectUrl } : {};
     router.push({ name: 'login', query });
 };
 

@@ -1,0 +1,2 @@
+import{_ as r}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c as s,a as t,o}from"./index-D03JAoCQ.js";const a={},c={class:"page register-page"};function n(i,e){return o(),s("section",c,[...e[0]||(e[0]=[t("h1",null,"Register",-1),t("p",null,"Registration form will be here.",-1)])])}const p=r(a,[["render",n],["__scopeId","data-v-6c8b4333"]]);export{p as default};
+//# sourceMappingURL=RegisterPage-DBgmFtS4.js.map

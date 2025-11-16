@@ -1,0 +1,2 @@
+import{_ as r}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c as s,a as o,o as a}from"./index-D03JAoCQ.js";const t={},c={class:"page profile-page"};function l(n,e){return a(),s("section",c,[...e[0]||(e[0]=[o("h1",null,"Profile",-1),o("p",null,"User profile will be here.",-1)])])}const p=r(t,[["render",l],["__scopeId","data-v-c7e0f55a"]]);export{p as default};
+//# sourceMappingURL=ProfilePage-BFS47Ll6.js.map

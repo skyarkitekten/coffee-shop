@@ -1,0 +1,2 @@
+import{_ as r}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c as s,a as o,o as c}from"./index-D03JAoCQ.js";const a={},l={class:"page public-profile-page"};function t(i,e){return c(),s("section",l,[...e[0]||(e[0]=[o("h1",null,"Public Profile",-1),o("p",null,"Tradesperson public profile details.",-1)])])}const f=r(a,[["render",t],["__scopeId","data-v-10bec0f8"]]);export{f as default};
+//# sourceMappingURL=PublicProfilePage-cni6NxS5.js.map
